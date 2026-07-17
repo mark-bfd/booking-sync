@@ -4,6 +4,8 @@
 
 Syncs vacation-rental bookings from [OwnerRez](https://www.ownerrez.com/) (channel manager) into prep tickets in [Plane](https://plane.so/) (self-hosted project management). Every confirmed booking becomes an operations ticket with a turnover checklist, a target date of arrival-minus-one-day, and a priority derived from lead time.
 
+**Impact:** every confirmed booking becomes a prep ticket with checklist and deadline in under a minute, unattended — and a dropped webhook can no longer turn into a missed turnover.
+
 ## Why polling *and* webhooks
 
 Webhooks are the low-latency path, but they fail silently: endpoints go down, deliveries get dropped, and events that fired while a receiver was offline are gone. This sync is the backstop — an idempotent reconciliation pass that can run on cron (or as a one-time backfill) and converge the two systems to the same state no matter how many events were missed. Running it twice is always safe.
